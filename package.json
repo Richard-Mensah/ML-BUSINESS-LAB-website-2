@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ML Business Lab — Complete AI & ML Curriculum</title>
+<meta name="description" content="The world's most comprehensive free ML & AI curriculum for business professionals. 20 modules · 104 lessons · Zero prerequisites."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#7C3AED;--purple-light:#F5F3FF;--purple-mid:#6D28D9;--purple-dark:#4C1D95;
+  --teal:#0F766E;--teal-light:#F0FDFA;--teal-mid:#0D9488;--teal-dark:#134E4A;
+  --amber:#B45309;--amber-light:#FFFBEB;--amber-mid:#D97706;--amber-dark:#78350F;
+  --blue:#1D4ED8;--blue-light:#EFF6FF;--blue-mid:#2563EB;--blue-dark:#1E3A8A;
+  --bg:#F8F8F8;--surface:#FFFFFF;--border:#E5E7EB;
+  --text:#111827;--text2:#6B7280;--text3:#9CA3AF;
+}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body.dark{--bg:#0D0D0D;--surface:#1A1A1A;--border:#2A2A2A;--text:#F9FAFB;--text2:#9CA3AF;--text3:#6B7280}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;height:58px;display:flex;align-items:center;gap:12px}
+.nav-logo{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#7C3AED,#4F46E5);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0}
+.nav-brand{flex:1}
+.nav-brand h1{font-size:14px;font-weight:700;line-height:1.1}
+.nav-brand p{font-size:10px;color:var(--text2)}
+.nav-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.progress-pill{display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:20px;padding:4px 12px 4px 8px}
+.progress-track{width:60px;height:5px;border-radius:3px;background:var(--border);overflow:hidden}
+.progress-fill{height:100%;background:#7C3AED;border-radius:3px;transition:width .4s}
+.progress-pct{font-size:12px;font-weight:700;color:#7C3AED}
+.btn-dark{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:11px;color:var(--text2);font-family:inherit}
+.btn-yt{background:#DC2626;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-family:inherit}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 58px)}
+main{flex:1;padding:1.5rem;min-width:0;transition:all .3s}
+aside{width:420px;flex-shrink:0;height:calc(100vh - 58px);position:sticky;top:58px;display:flex;flex-direction:column;background:var(--surface);border-left:1px solid var(--border);transition:all .3s}
+
+/* HERO */
+.hero{border-radius:16px;padding:1.75rem 2rem;background:linear-gradient(135deg,#4338CA 0%,#7C3AED 55%,#A21CAF 100%);color:#fff;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.hero-blob1{position:absolute;top:-30px;right:-30px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-blob2{position:absolute;bottom:-50px;right:80px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hero-inner{position:relative;z-index:1}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:.12em;opacity:.75;margin-bottom:8px}
+.hero h2{font-size:clamp(18px,3.5vw,30px);font-weight:800;margin:0 0 8px;line-height:1.2}
+.hero p{font-size:13px;opacity:.85;margin:0 0 1.25rem;max-width:500px;line-height:1.65}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap}
+.hero-stat{background:rgba(255,255,255,.15);border-radius:10px;padding:8px 14px;text-align:center;min-width:56px}
+.hero-stat-n{font-size:18px;font-weight:800;line-height:1}
+.hero-stat-l{font-size:10px;opacity:.8;margin-top:2px}
+
+/* CONTROLS */
+.search-input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;margin-bottom:10px;outline:none;font-family:inherit}
+.search-input:focus{border-color:#7C3AED;box-shadow:0 0 0 3px #7C3AED22}
+.phase-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.ptab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:inherit}
+.ptab.off{background:var(--bg);color:var(--text2)}
+.ptab.off:hover{background:var(--border)}
+
+/* PROGRESS BAR */
+.overall-progress{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.op-bar-wrap{flex:1;min-width:140px}
+.op-label{font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:500;letter-spacing:.05em}
+.op-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.op-fill{height:100%;background:linear-gradient(90deg,#7C3AED,#4F46E5);border-radius:4px;transition:width .4s}
+.op-count{text-align:right}
+.op-num{font-size:24px;font-weight:800;color:#7C3AED;line-height:1}
+.op-sub{font-size:11px;color:var(--text2)}
+.btn-reset{font-size:11px;color:var(--text2);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit}
+
+/* PHASE */
+.phase-block{margin-bottom:2rem}
+.phase-header{border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:12px;border:1px solid}
+.ph-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0;color:#fff}
+.ph-info{flex:1}
+.ph-title{font-size:15px;font-weight:700;margin-bottom:2px}
+.ph-desc{font-size:12px;line-height:1.55;margin-bottom:8px;opacity:.8}
+.ph-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ph-meta-text{font-size:11px;font-weight:600}
+.ph-mini-bar{display:flex;align-items:center;gap:5px}
+.ph-mini-track{width:70px;height:4px;border-radius:2px;overflow:hidden}
+.ph-mini-fill{height:100%;border-radius:2px;transition:width .4s}
+.ph-mini-count{font-size:11px;font-weight:600}
+
+/* MODULES GRID */
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.mod-card{background:var(--surface);border-radius:12px;overflow:hidden;transition:border-color .15s;border:1.5px solid var(--border)}
+.mod-card.open{border-color:var(--purple)}
+.mod-body{padding:1rem 1.1rem}
+.mod-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.mod-num{font-size:10px;color:var(--text2);font-weight:600;letter-spacing:.05em}
+.diff-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:auto}
+.mod-title{font-size:14px;font-weight:700;margin-bottom:5px;line-height:1.3;color:var(--text)}
+.mod-desc{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:10px}
+.mod-footer{display:flex;align-items:center;gap:8px}
+.mod-count{font-size:11px;color:var(--text2)}
+.mod-done{font-size:11px;font-weight:700;color:#7C3AED}
+.btn-expand{margin-left:auto;font-size:12px;background:none;border:none;cursor:pointer;font-weight:700;padding:0;font-family:inherit;transition:color .15s}
+
+/* LESSONS */
+.lessons-panel{border-top:1px solid var(--border)}
+.lesson-row{display:flex;align-items:center;gap:9px;padding:8px 1.1rem;border-bottom:1px solid;transition:background .1s;cursor:pointer}
+.lesson-row:last-child{border-bottom:none}
+.lesson-row.active{background:#F5F3FF}
+body.dark .lesson-row.active{background:#1C1427}
+.lesson-check{width:18px;height:18px;border-radius:4px;flex-shrink:0;border:1.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:9px;color:#fff;font-weight:800}
+.lesson-check.done{background:#7C3AED;border-color:#7C3AED}
+.lesson-info{flex:1;min-width:0}
+.lesson-title{font-size:12.5px;font-weight:500;line-height:1.3;color:var(--text);transition:all .15s}
+.lesson-title.done{color:var(--text2);text-decoration:line-through}
+.lesson-dur{font-size:10px;color:var(--text3);margin-top:1px}
+.btn-script{flex-shrink:0;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;border:1.5px solid;transition:all .15s;white-space:nowrap;font-family:inherit}
+
+/* SIDEBAR */
+.sidebar-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:.06em;margin-bottom:4px;color:var(--text2)}
+.sidebar-title{font-size:13px;font-weight:700;line-height:1.3;color:var(--text)}
+.sidebar-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.btn-close{background:none;border:none;cursor:pointer;font-size:22px;color:var(--text2);line-height:1;padding:0 2px;margin-left:auto;font-family:inherit}
+.sidebar-body{flex:1;overflow:auto;padding:1.25rem}
+.sidebar-empty{text-align:center;padding-top:2.5rem;color:var(--text2);font-size:13px;line-height:1.8}
+.sidebar-empty-icon{font-size:36px;opacity:.3;margin-bottom:12px}
+.loading-wrap{text-align:center;padding-top:2.5rem}
+.loading-icon{font-size:32px;opacity:.4;margin-bottom:14px;animation:spin 2s linear infinite;display:inline-block}
+.loading-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.loading-sub{font-size:11px;color:var(--text2);line-height:1.7}
+.dots{display:flex;justify-content:center;gap:5px;margin-top:16px}
+.dot{width:7px;height:7px;border-radius:50%;background:#7C3AED}
+.script-content{font-size:12.5px;line-height:1.9;white-space:pre-wrap;color:var(--text)}
+.script-actions{margin-top:1.5rem;display:flex;gap:8px}
+.btn-copy{flex:1;padding:9px;border-radius:8px;cursor:pointer;background:#7C3AED;color:#fff;border:none;font-size:12px;font-weight:700;font-family:inherit}
+.btn-regen{flex:1;padding:9px;border-radius:8px;cursor:pointer;background:none;border:1px solid var(--border);font-size:12px;color:var(--text);font-family:inherit}
+
+/* FOOTER */
+.footer{margin-top:2rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;text-align:center}
+.footer h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.footer p{font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6}
+
+/* EMPTY */
+.no-results{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
+
+/* ANIMATIONS */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dot-pulse{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+.dot:nth-child(1){animation:dot-pulse 1.2s .0s infinite}
+.dot:nth-child(2){animation:dot-pulse 1.2s .2s infinite}
+.dot:nth-child(3){animation:dot-pulse 1.2s .4s infinite}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:2px}
+body.dark ::-webkit-scrollbar-thumb{background:#4B5563}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  aside{display:none}
+  .modal-overlay{display:flex!important}
+  .nav-right .progress-pill{display:none}
+}
+
+/* MOBILE MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.6);align-items:flex-end}
+.modal-sheet{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-height:85vh;display:flex;flex-direction:column}
+.modal-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.modal-body{flex:1;overflow:auto;padding:1.25rem}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ML</div>
+  <div class="nav-brand">
+    <h1>ML Business Lab</h1>
+    <p>Prof. ML · CS · MSc Data Science · PhD Machine Learning &amp; AI</p>
+  </div>
+  <div class="nav-right">
+    <div class="progress-pill">
+      <div class="progress-track"><div class="progress-fill" id="navProg" style="width:0%"></div></div>
+      <span class="progress-pct" id="navPct">0%</span>
+    </div>
+    <button class="btn-dark" onclick="toggleDark()">◐ Dark</button>
+    <a class="btn-yt" href="https://youtube.com/@MLBusinessLab" target="_blank">▶ Subscribe</a>
+  </div>
+</nav>
+
+<div class="layout">
+  <!-- MAIN -->
+  <main id="mainContent">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-blob1"></div>
+      <div class="hero-blob2"></div>
+      <div class="hero-inner">
+        <div class="hero-label">ML BUSINESS LAB · PROFESSOR EDITION · THE WORLD'S MOST COMPREHENSIVE FREE ML & AI CURRICULUM</div>
+        <h2>From Math Concepts to Business Insights</h2>
+        <p>Zero prerequisites. 20 modules. 104 lessons. 44 weeks. Every lesson clickable, every production script AI-generatable in one click. Built for business professionals who want to truly understand and use machine learning.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-n">4</div><div class="hero-stat-l">Phases</div></div>
+          <div class="hero-stat"><div class="hero-stat-n">20</div><div class="hero-stat-l">Modules</div></div>
+          <div class="hero-stat"><div class="hero-stat-n">104</div><div class="hero-stat-l">Lessons</div></div>
+          <div class="hero-stat"><div class="hero-stat-n">44wk</div><div class="hero-stat-l">Full course</div></div>
+          <div class="hero-stat"><div class="hero-stat-n">0</div><div class="hero-stat-l">Prerequisites</div></div>
+          <div class="hero-stat"><div class="hero-stat-n">Free</div><div class="hero-stat-l">Always</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <input class="search-input" id="searchInput" placeholder="🔍  Search all 104 lessons, modules and topics..." oninput="render()"/>
+
+    <!-- PHASE TABS -->
+    <div class="phase-tabs" id="phaseTabs"></div>
+
+    <!-- OVERALL PROGRESS -->
+    <div class="overall-progress">
+      <div class="op-bar-wrap">
+        <div class="op-label">YOUR OVERALL PROGRESS</div>
+        <div class="op-bar"><div class="op-fill" id="opFill" style="width:0%"></div></div>
+      </div>
+      <div class="op-count">
+        <div class="op-num" id="opNum">0</div>
+        <div class="op-sub" id="opSub">of 104 lessons complete</div>
+      </div>
+      <button class="btn-reset" onclick="resetProgress()">Reset</button>
+    </div>
+
+    <!-- CURRICULUM -->
+    <div id="curriculumContainer"></div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <h3>ML Business Lab</h3>
+      <p>The world's most comprehensive free ML &amp; AI curriculum for business professionals.<br/>
+      Prof. ML · BSc Computer Science · MSc Data Science, Machine Learning &amp; AI · PhD Machine Learning &amp; AI</p>
+      <a class="btn-yt" href="https://youtube.com/@MLBusinessLab" target="_blank" style="display:inline-flex">▶ Subscribe on YouTube</a>
+    </div>
+
+  </main>
+
+  <!-- DESKTOP SIDEBAR -->
+  <aside id="desktopSidebar">
+    <div class="sidebar-header">
+      <div style="flex:1">
+        <div class="sidebar-label">AI LESSON SCRIPT GENERATOR</div>
+        <div class="sidebar-title" id="sidebarTitle">Select any lesson</div>
+        <div class="sidebar-sub" id="sidebarSub">Click "Script ↗" on any lesson to generate</div>
+      </div>
+      <button class="btn-close" onclick="closeSidebar()">×</button>
+    </div>
+    <div class="sidebar-body" id="sidebarBody">
+      <div class="sidebar-empty">
+        <div class="sidebar-empty-icon">📝</div>
+        <strong>AI Script Generator</strong><br/><br/>
+        Click the <strong>Script ↗</strong> button on any lesson below to instantly generate a full MIT-style production script.<br/><br/>
+        <span style="font-size:11px;color:var(--text3)">Includes: timed segments · stage directions · spoken dialogue · graphics brief · B-roll notes · CTA</span>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- MOBILE MODAL -->
+<div class="modal-overlay" id="mobileModal" onclick="closeMobileModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <div style="flex:1">
+        <div class="sidebar-label">AI LESSON SCRIPT GENERATOR</div>
+        <div class="sidebar-title" id="modalTitle">Lesson</div>
+        <div class="sidebar-sub" id="modalSub"></div>
+      </div>
+      <button class="btn-close" onclick="document.getElementById('mobileModal').style.display='none'">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CURRICULUM DATA
+// ═══════════════════════════════════════════════════════
+const CURRICULUM = [
+  {
+    id:'p1',phase:1,label:'Phase 1',title:'Absolute Foundations',
+    color:'#7C3AED',light:'#F5F3FF',border:'#DDD6FE',dark:'#4C1D95',mid:'#6D28D9',
+    weeks:'Weeks 1–8',totalVideos:26,icon:'∑',
+    desc:'Zero to ready. Math, statistics, Python and data — built for someone who has never written a line of code or opened a spreadsheet for analysis. No jargon. No shortcuts. Just clear, permanent understanding.',
+    modules:[
+      {id:'m1',num:'01',title:'What Is Machine Learning?',diff:'Beginner',videos:3,
+       desc:'The big picture. Understand what ML is, where it lives in the world, and why it matters — with zero jargon and three examples you experienced today without realising it.',
+       lessons:[
+         {n:1,title:'What is machine learning? (plain English)',dur:'10 min',prompt:'Write a full MIT-style YouTube production script for ML Business Lab — Module 1 Video 1: What Is Machine Learning? Include: (1) cold open hook 30s, (2) who this channel is for 90s, (3) the core definition with 2 analogies 3min, (4) 3 real-world examples with b-roll notes 2min, (5) the three types overview 90s, (6) channel roadmap 60s, (7) close + CTA 60s. Include stage directions in [brackets], timing labels, key graphic descriptions. Beginner audience. Warm, authoritative MIT tone.'},
+         {n:2,title:'Traditional programming vs machine learning',dur:'9 min',prompt:'Write a full MIT-style YouTube production script for ML Business Lab — Module 1 Video 2: Traditional Programming vs Machine Learning. Cover: the paradigm flip (Input+Rules=Output vs Input+Output=Rules), the cookbook and chef analogy, tax software vs spam filter examples, the side-by-side comparison table. Include animated graphic briefs, stage directions, timing, spoken dialogue samples.'},
+         {n:3,title:'Where you already use ML every day',dur:'9 min',prompt:'Write a full MIT-style YouTube production script for ML Business Lab — Module 1 Video 3: Where You Already Use ML Every Day. Cover invisible ML: Spotify, Gmail spam, fraud alerts, face unlock, Amazon recommendations, Google Maps ETA, autocomplete. Show how each one works at a conceptual level. Engaging, eye-opening tone.'},
+       ]},
+      {id:'m2',num:'02',title:'Math Essentials — No Panic',diff:'Beginner',videos:6,
+       desc:'The minimum math you actually need for ML. Made visual and intuitive. If you passed secondary school maths, you have everything required.',
+       lessons:[
+         {n:1,title:'What is a function? (and why ML is full of them)',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M2V1 — What is a Function for ML. Intuition first, equation second. Connect to ML throughout.'},
+         {n:2,title:'Slopes, rates of change and gradient intuition',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M2V2 — Slopes and Gradient Intuition. Seed the concept of gradient descent. Visual, no calculus panic.'},
+         {n:3,title:'Vectors: lists of numbers that mean something',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M2V3 — Vectors Explained Visually. From arrays to geometry, distance and similarity.'},
+         {n:4,title:'Matrices: the language of data',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M2V4 — Matrices for ML. Rows, columns, transformations, dot products made visual.'},
+         {n:5,title:'Logarithms without the trauma',dur:'8 min',prompt:'Write full lesson script: ML Business Lab M2V5 — Logarithms for ML. Why ML loves log, log loss, entropy — all intuitive.'},
+         {n:6,title:'Mini-project: visualising math with Python',dur:'14 min',prompt:'Write full lesson script: ML Business Lab M2V6 — Visualising Math with Python. First hands-on code, matplotlib plots of all concepts covered.'},
+       ]},
+      {id:'m3',num:'03',title:'Statistics for ML — The Real Stuff',diff:'Beginner',videos:7,
+       desc:'Statistics is the language ML speaks. Mean, distributions, probability, Bayes — all connected to data you will actually use in business decisions.',
+       lessons:[
+         {n:1,title:'Mean, median, mode — and when each one lies',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M3V1 — Mean Median Mode for ML. When each measure misleads and why it matters.'},
+         {n:2,title:'Variance and standard deviation, visually',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M3V2 — Variance and Standard Deviation. Spread, bell curves, and why ML cares.'},
+         {n:3,title:'Probability from scratch',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M3V3 — Probability from Scratch. Coins, cards, conditional probability, connecting to ML predictions.'},
+         {n:4,title:'Probability distributions: normal, binomial, Poisson',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M3V4 — Probability Distributions for ML. The shapes data takes, with business examples.'},
+         {n:5,title:'Correlation vs causation — the most important distinction',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M3V5 — Correlation vs Causation. Business examples, spurious correlations, why this matters in ML.'},
+         {n:6,title:'Bayes theorem in plain English',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M3V6 — Bayes Theorem Plain English. Medical tests, spam filters, Bayesian thinking for business.'},
+         {n:7,title:'Stats project: exploring a real business dataset',dur:'16 min',prompt:'Write full lesson script: ML Business Lab M3V7 — Stats Mini Project Real Dataset. Full EDA with descriptive stats in Python, business insights.'},
+       ]},
+      {id:'m4',num:'04',title:'Python for Data Science — From Zero',diff:'Beginner',videos:10,
+       desc:'Your first line of code today. From hello world to manipulating real datasets — every step explained, nothing assumed.',
+       lessons:[
+         {n:1,title:'Installing Python and Jupyter — 10 minutes, free',dur:'8 min',prompt:'Write full lesson script: ML Business Lab M4V1 — Python and Jupyter Setup. Zero to running first cell in 10 minutes.'},
+         {n:2,title:'Variables, data types and your first programme',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M4V2 — Variables and Data Types. Int, float, string, bool with business examples.'},
+         {n:3,title:'Lists, loops and conditionals',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M4V3 — Lists Loops Conditionals. Control flow with business data examples.'},
+         {n:4,title:'Functions: writing reusable code',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M4V4 — Python Functions. Def, return, parameters, scope.'},
+         {n:5,title:'NumPy: fast maths on arrays',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M4V5 — NumPy Arrays. The engine underneath pandas and scikit-learn.'},
+         {n:6,title:'Pandas Part 1: loading and exploring data',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M4V6 — Pandas Part 1. DataFrames, read_csv, head, info, describe.'},
+         {n:7,title:'Pandas Part 2: filtering, grouping, aggregating',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M4V7 — Pandas Part 2. Loc, iloc, groupby, merge, pivot.'},
+         {n:8,title:'Matplotlib and Seaborn: charts that communicate',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M4V8 — Data Visualisation Python. Charts that tell business stories.'},
+         {n:9,title:'Data cleaning: the skill no one teaches',dur:'13 min',prompt:'Write full lesson script: ML Business Lab M4V9 — Data Cleaning. Missing values, outliers, duplicates, type errors — real dataset.'},
+         {n:10,title:'Capstone: full EDA on a real business dataset',dur:'18 min',prompt:'Write full lesson script: ML Business Lab M4V10 — Full EDA Capstone. End-to-end exploratory analysis on a retail dataset.'},
+       ]},
+    ]
+  },
+  {
+    id:'p2',phase:2,label:'Phase 2',title:'Core Machine Learning',
+    color:'#0F766E',light:'#F0FDFA',border:'#99F6E4',dark:'#134E4A',mid:'#0D9488',
+    weeks:'Weeks 9–18',totalVideos:32,icon:'⚙',
+    desc:'The engine room. Every major algorithm taught visually first, mathematically second, and in code third. Build real models from scratch. Understand what is happening inside every single one.',
+    modules:[
+      {id:'m5',num:'05',title:'Data Preparation & Feature Engineering',diff:'Intermediate',videos:5,
+       desc:'What makes data good or bad. How to prepare it, engineer features, and avoid the mistakes that sink most beginner models before they even start.',
+       lessons:[
+         {n:1,title:'Types of data: numerical, categorical, text, images',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M5V1 — Types of Data for ML. How each type is handled differently.'},
+         {n:2,title:'Train, validation and test splits explained',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M5V2 — Train Test Validation Splits. The most common beginner mistake, explained visually.'},
+         {n:3,title:'Encoding categorical variables',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M5V3 — Encoding Categorical Variables. One-hot, label encoding, ordinal — when to use which.'},
+         {n:4,title:'Feature scaling: normalisation vs standardisation',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M5V4 — Normalisation vs Standardisation. When each matters and why.'},
+         {n:5,title:'Feature engineering: creating signal from raw data',dur:'13 min',prompt:'Write full lesson script: ML Business Lab M5V5 — Feature Engineering. The art of creating predictive features from raw data.'},
+       ]},
+      {id:'m6',num:'06',title:'Supervised Learning — Regression',diff:'Intermediate',videos:6,
+       desc:'Predict continuous values. From linear regression to polynomial and regularised models — with gradient descent explained visually, step by step.',
+       lessons:[
+         {n:1,title:'Linear regression: the line that learns',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M6V1 — Linear Regression Intuition. The line that minimises error — visual before equation.'},
+         {n:2,title:'Cost functions and least squares',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M6V2 — Cost Functions Least Squares. What the model is actually minimising.'},
+         {n:3,title:'Gradient descent: how the model learns',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M6V3 — Gradient Descent Visual. Step-by-step, animated explanation.'},
+         {n:4,title:'Multiple linear regression in Python (scikit-learn)',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M6V4 — Multiple Linear Regression Scikit-Learn. End-to-end with house price dataset.'},
+         {n:5,title:'Polynomial regression and underfitting',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M6V5 — Polynomial Regression. When straight lines are not enough.'},
+         {n:6,title:'Regularisation: Ridge and Lasso explained',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M6V6 — Ridge Lasso Regularisation. Preventing overfitting — L1 and L2 visually.'},
+       ]},
+      {id:'m7',num:'07',title:'Supervised Learning — Classification',diff:'Intermediate',videos:7,
+       desc:'Predict categories. Logistic regression, decision trees, SVM and k-nearest neighbours — with a complete business project at the end.',
+       lessons:[
+         {n:1,title:'Logistic regression: predicting yes or no',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M7V1 — Logistic Regression. Sigmoid function, log loss, decision boundary — visual.'},
+         {n:2,title:'Decision trees: ML you can draw on paper',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M7V2 — Decision Trees. Splits, Gini impurity, pruning — fully visual.'},
+         {n:3,title:'K-nearest neighbours: learning by proximity',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M7V3 — KNN Algorithm. Distance metrics, choosing k, the curse of dimensionality.'},
+         {n:4,title:'Support vector machines: maximum margin classifier',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M7V4 — SVM Intuition. Hyperplanes, support vectors, kernel trick — visual.'},
+         {n:5,title:'Naive Bayes: fast, probabilistic, surprisingly good',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M7V5 — Naive Bayes. Text classification, spam detection, Bayes in practice.'},
+         {n:6,title:'Multi-class classification strategies',dur:'8 min',prompt:'Write full lesson script: ML Business Lab M7V6 — Multi-class Classification. One-vs-rest, softmax, real examples.'},
+         {n:7,title:'Project: customer churn predictor end-to-end',dur:'16 min',prompt:'Write full lesson script: ML Business Lab M7V7 — Classification Project. Full churn predictor from data to deployed model.'},
+       ]},
+      {id:'m8',num:'08',title:'Model Evaluation & Validation',diff:'Intermediate',videos:5,
+       desc:'Is your model actually working? The lesson beginners skip — and the one that costs the most when ignored in production.',
+       lessons:[
+         {n:1,title:'Accuracy, precision, recall and F1 — the real differences',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M8V1 — Accuracy Precision Recall F1. When accuracy is meaningless — fraud example.'},
+         {n:2,title:'Confusion matrices decoded',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M8V2 — Confusion Matrix. Every cell, what it means, how to act on it.'},
+         {n:3,title:'ROC curves and AUC score',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M8V3 — ROC Curves AUC. The full picture of classifier performance.'},
+         {n:4,title:'Overfitting vs underfitting — visually',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M8V4 — Overfitting Underfitting. Bias-variance tradeoff made visual with real examples.'},
+         {n:5,title:'Cross-validation in practice',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M8V5 — K-Fold Cross Validation. Why it matters and how to implement it.'},
+       ]},
+      {id:'m9',num:'09',title:'Unsupervised Learning',diff:'Intermediate',videos:5,
+       desc:'No labels needed. Find hidden structure — clusters, anomalies, compressed representations — in any dataset you encounter.',
+       lessons:[
+         {n:1,title:'What is unsupervised learning?',dur:'8 min',prompt:'Write full lesson script: ML Business Lab M9V1 — What is Unsupervised Learning. The paradigm, use cases, intuition.'},
+         {n:2,title:'K-means clustering: visually explained',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M9V2 — K-Means Clustering. From random centroids to tight clusters — animated.'},
+         {n:3,title:'Hierarchical clustering and dendrograms',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M9V3 — Hierarchical Clustering. When you do not know how many clusters.'},
+         {n:4,title:'DBSCAN: clustering by density',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M9V4 — DBSCAN. Handles noise and non-spherical clusters — visual.'},
+         {n:5,title:'PCA: dimensionality reduction visually',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M9V5 — PCA Dimensionality Reduction. Squishing data without losing what matters.'},
+       ]},
+      {id:'m10',num:'10',title:'Ensemble Methods',diff:'Intermediate',videos:4,
+       desc:'When one model is not enough. Random forests, gradient boosting and XGBoost — the workhorses of real-world ML and Kaggle competitions.',
+       lessons:[
+         {n:1,title:'Bagging and the wisdom of crowds',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M10V1 — Bagging. Why combining weak models beats one strong model.'},
+         {n:2,title:'Random forests: intuition and implementation',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M10V2 — Random Forests. The go-to model for tabular business data.'},
+         {n:3,title:'XGBoost: the competition winner',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M10V3 — XGBoost. Why it dominates Kaggle and real production systems.'},
+         {n:4,title:'Hyperparameter tuning: grid search and random search',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M10V4 — Hyperparameter Tuning. Getting the most from any model systematically.'},
+       ]},
+    ]
+  },
+  {
+    id:'p3',phase:3,label:'Phase 3',title:'Business AI in Practice',
+    color:'#B45309',light:'#FFFBEB',border:'#FDE68A',dark:'#78350F',mid:'#D97706',
+    weeks:'Weeks 19–30',totalVideos:24,icon:'◈',
+    desc:'Real problems. Real datasets. Real business impact. End-to-end applied projects that connect every ML technique directly to commercial value and decisions that organisations actually face.',
+    modules:[
+      {id:'m11',num:'11',title:'Sales Forecasting with ML',diff:'Applied',videos:6,
+       desc:'Predict next quarter\'s revenue. Time series, regression, Prophet — built end to end with a Streamlit dashboard stakeholders can actually use.',
+       lessons:[
+         {n:1,title:'Time series data: what makes it different',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M11V1 — Time Series Intro. Trend, seasonality, noise, stationarity — visual.'},
+         {n:2,title:'Moving averages and exponential smoothing',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M11V2 — Moving Averages. Classical forecasting baselines in Python.'},
+         {n:3,title:'ARIMA models explained intuitively',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M11V3 — ARIMA Models. AutoRegressive Integrated Moving Average — intuition first.'},
+         {n:4,title:'ML models for time series: features and lags',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M11V4 — ML for Time Series. Turning sequences into tabular data with lag features.'},
+         {n:5,title:'Prophet: Facebook\'s forecasting tool in Python',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M11V5 — Prophet Forecasting. Business-ready forecasts with uncertainty intervals.'},
+         {n:6,title:'Project: full sales forecasting dashboard',dur:'20 min',prompt:'Write full lesson script: ML Business Lab M11V6 — Sales Forecasting Project. Full pipeline with Streamlit dashboard deployment.'},
+       ]},
+      {id:'m12',num:'12',title:'Customer Segmentation',diff:'Applied',videos:5,
+       desc:'Know your customers better than they know themselves. RFM analysis, clustering, actionable segment profiles and marketing strategy per segment.',
+       lessons:[
+         {n:1,title:'RFM analysis: Recency, Frequency, Monetary',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M12V1 — RFM Analysis. The gold standard of customer analytics — built in Python.'},
+         {n:2,title:'K-means for customer groups',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M12V2 — Customer Segmentation K-Means. From RFM scores to meaningful segments.'},
+         {n:3,title:'Profiling and naming your segments',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M12V3 — Segment Profiling. Turning data clusters into business personas.'},
+         {n:4,title:'Segment-driven marketing strategy',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M12V4 — Segment Marketing Strategy. What to do with each cluster — practical actions.'},
+         {n:5,title:'Project: full customer segmentation pipeline',dur:'20 min',prompt:'Write full lesson script: ML Business Lab M12V5 — Segmentation Project. Retail dataset, full workflow, visualised results.'},
+       ]},
+      {id:'m13',num:'13',title:'Fraud Detection',diff:'Applied',videos:5,
+       desc:'Catch fraudsters before they cost money. Imbalanced data, anomaly detection, SMOTE and a real-time scoring system — built from scratch.',
+       lessons:[
+         {n:1,title:'Imbalanced datasets: the fraud detection problem',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M13V1 — Imbalanced Data. Why accuracy fails when fraud is 0.1% of transactions.'},
+         {n:2,title:'SMOTE and resampling techniques',dur:'10 min',prompt:'Write full lesson script: ML Business Lab M13V2 — SMOTE Oversampling. Creating synthetic minority samples in Python.'},
+         {n:3,title:'Isolation Forest for anomaly detection',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M13V3 — Isolation Forest. Detecting unusual transactions without labels.'},
+         {n:4,title:'Precision-recall tradeoffs in fraud scoring',dur:'9 min',prompt:'Write full lesson script: ML Business Lab M13V4 — Fraud Threshold Tuning. Choosing the right threshold for your business cost.'},
+         {n:5,title:'Project: build a fraud scoring system',dur:'20 min',prompt:'Write full lesson script: ML Business Lab M13V5 — Fraud Detection Project. Credit card dataset end-to-end scoring system.'},
+       ]},
+      {id:'m14',num:'14',title:'Churn Prediction & Retention',diff:'Applied',videos:5,
+       desc:'Predict which customers are about to leave — before they do. Build the model, explain it with SHAP, and translate predictions into retention actions.',
+       lessons:[
+         {n:1,title:'Defining churn for your business context',dur:'8 min',prompt:'Write full lesson script: ML Business Lab M14V1 — Defining Churn. Not one-size-fits-all — SaaS vs telecom vs retail churn.'},
+         {n:2,title:'Feature engineering for churn prediction',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M14V2 — Churn Feature Engineering. Behavioural signals that predict leaving.'},
+         {n:3,title:'Building and evaluating the churn classifier',dur:'12 min',prompt:'Write full lesson script: ML Business Lab M14V3 — Churn Classifier XGBoost. End-to-end model with proper evaluation.'},
+         {n:4,title:'SHAP values: why did the model predict churn?',dur:'11 min',prompt:'Write full lesson script: ML Business Lab M14V4 — SHAP Values. Model explainability for business stakeholders.'},
+         {n:5,title:'Project: end-to-end churn pipeline with dashboard',dur:'20 min',prompt:'Write full lesson script: ML Business Lab M14V5 — Churn Project. Full pipeline with retention recommendation dashboard.'},
+       ]},
+      {id:'m14b',num:'15',title:'Pricing Optimisation & Demand Forecasting',diff:'Applied',videos:3,
+       desc:'Use ML to set smarter prices and forecast demand. Price elasticity modelling, sensitivity analysis and revenue optimisation in practice.',
+       lessons:[
+         {n:1,title:'Price elasticity and demand curves with ML',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — Price Elasticity ML. Modelling demand response to price changes.'},
+         {n:2,title:'Dynamic pricing models in Python',dur:'13 min',prompt:'Write full lesson script: ML Business Lab — Dynamic Pricing Models. Building a pricing engine that adapts to context.'},
+         {n:3,title:'Project: revenue optimisation system',dur:'20 min',prompt:'Write full lesson script: ML Business Lab — Revenue Optimisation Project. Full pricing optimisation pipeline end-to-end.'},
+       ]},
+    ]
+  },
+  {
+    id:'p4',phase:4,label:'Phase 4',title:'Advanced AI',
+    color:'#1D4ED8',light:'#EFF6FF',border:'#BFDBFE',dark:'#1E3A8A',mid:'#2563EB',
+    weeks:'Weeks 31–44',totalVideos:22,icon:'⬡',
+    desc:'Neural networks. Deep learning. LLMs. AI agents. Production deployment. Responsible AI. The frontier — taught from fundamentals upward, not from hype downward. Build systems that actually run in the real world.',
+    modules:[
+      {id:'m15',num:'16',title:'Neural Networks From Scratch',diff:'Advanced',videos:5,
+       desc:'What a neural network really is — built from a single neuron upward. No black-box hand-waving. Pure intuition, then maths, then PyTorch.',
+       lessons:[
+         {n:1,title:'A single neuron: what it actually computes',dur:'11 min',prompt:'Write full lesson script: ML Business Lab — Single Neuron. Weights, bias, activation functions — what one neuron does.'},
+         {n:2,title:'Layers and activation functions visually',dur:'11 min',prompt:'Write full lesson script: ML Business Lab — Layers and Activations. ReLU, sigmoid, tanh — visual and practical.'},
+         {n:3,title:'Backpropagation: how the network learns',dur:'13 min',prompt:'Write full lesson script: ML Business Lab — Backpropagation. Chain rule made visual — the most important algorithm in deep learning.'},
+         {n:4,title:'Building a neural network in pure Python',dur:'14 min',prompt:'Write full lesson script: ML Business Lab — Neural Net Pure Python. From scratch, no frameworks — so you truly understand it.'},
+         {n:5,title:'PyTorch fundamentals: tensors, autograd, training loop',dur:'14 min',prompt:'Write full lesson script: ML Business Lab — PyTorch Fundamentals. Tensors, autograd, training loop — your first real deep learning code.'},
+       ]},
+      {id:'m16',num:'17',title:'Natural Language Processing',diff:'Advanced',videos:5,
+       desc:'Make computers understand text. Sentiment, classification, embeddings — applied to real business text data with HuggingFace transformers.',
+       lessons:[
+         {n:1,title:'Text preprocessing: tokenisation and cleaning',dur:'10 min',prompt:'Write full lesson script: ML Business Lab — NLP Text Preprocessing. From raw text to features — tokenisation, stemming, lemmatisation.'},
+         {n:2,title:'Bag of words and TF-IDF',dur:'10 min',prompt:'Write full lesson script: ML Business Lab — Bag of Words TF-IDF. Classical text representation techniques that still work.'},
+         {n:3,title:'Word embeddings: Word2Vec and GloVe',dur:'11 min',prompt:'Write full lesson script: ML Business Lab — Word Embeddings. Words as vectors — semantic relationships made mathematical.'},
+         {n:4,title:'Sentiment analysis on customer reviews',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — Sentiment Analysis. Customer reviews dataset end-to-end in Python.'},
+         {n:5,title:'HuggingFace transformers for business NLP',dur:'13 min',prompt:'Write full lesson script: ML Business Lab — HuggingFace Transformers. State-of-the-art NLP in 10 lines of Python.'},
+       ]},
+      {id:'m17',num:'18',title:'Large Language Models for Business',diff:'Advanced',videos:5,
+       desc:'How GPT-style models work, LLM APIs, prompt engineering, RAG pipelines and autonomous AI agents for real business workflows.',
+       lessons:[
+         {n:1,title:'What LLMs actually are (and are not)',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — What LLMs Are. Transformers, attention, next-token prediction — without the hype.'},
+         {n:2,title:'Using LLM APIs in Python — OpenAI, Anthropic, Gemini',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — LLM APIs Python. Calling the three major LLM providers from Python.'},
+         {n:3,title:'Prompt engineering for business tasks',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — Prompt Engineering. System prompts, few-shot, chain-of-thought — practical business applications.'},
+         {n:4,title:'RAG: Retrieval-Augmented Generation pipelines',dur:'15 min',prompt:'Write full lesson script: ML Business Lab — RAG Pipeline. Making LLMs answer questions about your own business data.'},
+         {n:5,title:'AI agents: autonomous systems for business automation',dur:'14 min',prompt:'Write full lesson script: ML Business Lab — AI Agents. Building autonomous agents that complete multi-step business tasks.'},
+       ]},
+      {id:'m18',num:'19',title:'MLOps & Deploying ML Models',diff:'Advanced',videos:4,
+       desc:'A model in a notebook helps nobody. APIs, dashboards, CI/CD pipelines, monitoring and production best practices.',
+       lessons:[
+         {n:1,title:'MLOps: what it is and why it matters',dur:'9 min',prompt:'Write full lesson script: ML Business Lab — MLOps Introduction. The gap between a notebook model and a production system.'},
+         {n:2,title:'FastAPI: wrap your model in a REST API',dur:'12 min',prompt:'Write full lesson script: ML Business Lab — FastAPI Model Deployment. REST endpoint for your ML model in 30 lines.'},
+         {n:3,title:'Streamlit dashboards for business stakeholders',dur:'13 min',prompt:'Write full lesson script: ML Business Lab — Streamlit ML Dashboard. Beautiful interactive apps for non-technical stakeholders.'},
+         {n:4,title:'Capstone: full ML pipeline deployed to the web',dur:'24 min',prompt:'Write full lesson script: ML Business Lab — Full Deployment Capstone. From training to live web app — the complete journey.'},
+       ]},
+      {id:'m19',num:'20',title:'Responsible AI & Business Ethics',diff:'Advanced',videos:3,
+       desc:'Bias, fairness, transparency, regulation and governance. How to build AI systems your organisation and your customers can trust.',
+       lessons:[
+         {n:1,title:'Bias in ML: where it comes from and how to detect it',dur:'11 min',prompt:'Write full lesson script: ML Business Lab — Bias in ML. Sources, measurement, mitigation — with real business examples.'},
+         {n:2,title:'AI regulation: GDPR, EU AI Act and what they mean for you',dur:'10 min',prompt:'Write full lesson script: ML Business Lab — AI Regulation. What GDPR and the EU AI Act mean for ML practitioners.'},
+         {n:3,title:'Building trustworthy AI systems for business',dur:'11 min',prompt:'Write full lesson script: ML Business Lab — Trustworthy AI. Governance frameworks, explainability, human oversight.'},
+       ]},
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let activePhase = 'all';
+let expanded = {};
+let progress = {};
+let activeSidebar = null;
+
+const totalLessons = CURRICULUM.reduce((t,ph)=>t+ph.modules.reduce((mt,m)=>mt+m.lessons.length,0),0);
+
+function loadProgress(){
+  try{ const s=localStorage.getItem('mlbl_v3'); if(s) progress=JSON.parse(s); }catch(e){}
+}
+function saveProgress(){
+  try{ localStorage.setItem('mlbl_v3',JSON.stringify(progress)); }catch(e){}
+}
+function resetProgress(){
+  if(!confirm('Reset all progress?')) return;
+  progress={}; saveProgress(); updateProgressUI(); render();
+}
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  document.querySelector('.btn-dark').textContent = document.body.classList.contains('dark') ? '☀ Light' : '◐ Dark';
+}
+
+// ═══════════════════════════════════════════════════════
+// PROGRESS UI
+// ═══════════════════════════════════════════════════════
+function updateProgressUI(){
+  const done = Object.values(progress).filter(Boolean).length;
+  const pct = Math.round((done/totalLessons)*100);
+  document.getElementById('navProg').style.width = pct+'%';
+  document.getElementById('navPct').textContent = pct+'%';
+  document.getElementById('opFill').style.width = pct+'%';
+  document.getElementById('opNum').textContent = done;
+  document.getElementById('opSub').textContent = 'of '+totalLessons+' lessons complete';
+}
+
+function phaseProgress(ph){
+  let t=0,d=0;
+  ph.modules.forEach(m=>m.lessons.forEach(l=>{t++;if(progress[`${ph.id}_${m.id}_${l.n}`])d++;}));
+  return{t,d,pct:t?Math.round((d/t)*100):0};
+}
+
+function toggleLesson(key,el){
+  progress[key]=!progress[key];
+  saveProgress(); updateProgressUI();
+  if(progress[key]){el.classList.add('done');el.textContent='✓';}
+  else{el.classList.remove('done');el.textContent='';}
+  // update mod done count
+  const modId = key.split('_')[1];
+  const modCard = document.getElementById('modcard_'+modId);
+  if(modCard){
+    const phId = key.split('_')[0];
+    const ph = CURRICULUM.find(p=>p.id===phId);
+    const mod = ph&&ph.modules.find(m=>m.id===modId);
+    if(mod){
+      const done = mod.lessons.filter(l=>progress[`${phId}_${modId}_${l.n}`]).length;
+      const doneEl = modCard.querySelector('.mod-done');
+      if(doneEl) doneEl.textContent = done>0?done+' ✓':'';
+    }
+  }
+  // update phase bar
+  const phId = key.split('_')[0];
+  const ph = CURRICULUM.find(p=>p.id===phId);
+  if(ph){
+    const pp = phaseProgress(ph);
+    const fill = document.getElementById('phfill_'+phId);
+    const count = document.getElementById('phcount_'+phId);
+    if(fill) fill.style.width=pp.pct+'%';
+    if(count) count.textContent=pp.d+'/'+pp.t;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// PHASE TABS
+// ═══════════════════════════════════════════════════════
+function buildTabs(){
+  const container = document.getElementById('phaseTabs');
+  const tabs = [{id:'all',label:'All phases',color:'#374151'},...CURRICULUM.map(p=>({id:p.id,label:p.label+' · '+p.title,color:p.color}))];
+  container.innerHTML = tabs.map(t=>`
+    <button class="ptab ${activePhase===t.id?'':'off'}" id="tab_${t.id}"
+      style="background:${activePhase===t.id?t.color:''};color:${activePhase===t.id?'#fff':''}"
+      onclick="setPhase('${t.id}','${t.color}')">${t.label}</button>
+  `).join('');
+}
+function setPhase(id,color){
+  activePhase=id; buildTabs(); render();
+}
+
+// ═══════════════════════════════════════════════════════
+// DIFF BADGE STYLES
+// ═══════════════════════════════════════════════════════
+const DIFF={
+  Beginner:{bg:'#DCFCE7',text:'#166534'},
+  Intermediate:{bg:'#FEF3C7',text:'#92400E'},
+  Applied:{bg:'#DBEAFE',text:'#1E40AF'},
+  Advanced:{bg:'#F3E8FF',text:'#6B21A8'},
+};
+
+// ═══════════════════════════════════════════════════════
+// RENDER CURRICULUM
+// ═══════════════════════════════════════════════════════
+function render(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const container = document.getElementById('curriculumContainer');
+
+  const filtered = CURRICULUM.map(ph=>({
+    ...ph,
+    modules: ph.modules.map(m=>({
+      ...m,
+      lessons: m.lessons.filter(l=>!q||l.title.toLowerCase().includes(q)||m.title.toLowerCase().includes(q)||ph.title.toLowerCase().includes(q))
+    })).filter(m=>!q||m.lessons.length>0)
+  })).filter(ph=>(activePhase==='all'||ph.id===activePhase)&&(!q||ph.modules.some(m=>m.lessons.length>0)));
+
+  if(!filtered.length){
+    container.innerHTML='<div class="no-results">No results found for "'+q+'"</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(ph=>{
+    const pp = phaseProgress(ph);
+    return `
+    <div class="phase-block">
+      <div class="phase-header" style="background:${ph.light};border-color:${ph.border}">
+        <div class="ph-icon" style="background:${ph.color}">${ph.icon}</div>
+        <div class="ph-info">
+          <div class="ph-title" style="color:${ph.dark}">${ph.label} · ${ph.title}</div>
+          <div class="ph-desc" style="color:${ph.dark}">${ph.desc}</div>
+          <div class="ph-meta">
+            <span class="ph-meta-text" style="color:${ph.mid}">${ph.weeks} · ${ph.totalVideos} videos · ${ph.modules.length} modules</span>
+            <div class="ph-mini-bar">
+              <div class="ph-mini-track" style="background:${ph.color}33">
+                <div class="ph-mini-fill" id="phfill_${ph.id}" style="width:${pp.pct}%;background:${ph.color}"></div>
+              </div>
+              <span class="ph-mini-count" id="phcount_${ph.id}" style="color:${ph.mid}">${pp.d}/${pp.t}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modules-grid">
+        ${ph.modules.map(mod=>{
+          const isExp = expanded[mod.id];
+          const d = DIFF[mod.diff]||DIFF.Beginner;
+          const modDone = mod.lessons.filter(l=>progress[`${ph.id}_${mod.id}_${l.n}`]).length;
+          return `
+          <div class="mod-card ${isExp?'open':''}" id="modcard_${mod.id}">
+            <div class="mod-body">
+              <div class="mod-top">
+                <span class="mod-num">MODULE ${mod.num}</span>
+                <span class="diff-badge" style="background:${d.bg};color:${d.text}">${mod.diff}</span>
+              </div>
+              <div class="mod-title">${mod.title}</div>
+              <div class="mod-desc">${mod.desc}</div>
+              <div class="mod-footer">
+                <span class="mod-count">${mod.lessons.length} lessons</span>
+                <span class="mod-done">${modDone>0?modDone+' ✓':''}</span>
+                <button class="btn-expand" style="color:${ph.color}" onclick="toggleExpand('${mod.id}',this)">${isExp?'Hide ▲':'Show ▼'}</button>
+              </div>
+            </div>
+            ${isExp?`<div class="lessons-panel">${mod.lessons.map(l=>{
+              const key=`${ph.id}_${mod.id}_${l.n}`;
+              const done=progress[key];
+              const isActive = activeSidebar&&activeSidebar.lesson.title===l.title;
+              return `
+              <div class="lesson-row ${isActive?'active':''}" style="border-bottom-color:var(--border)">
+                <div class="lesson-check ${done?'done':''}" onclick="toggleLesson('${key}',this)">${done?'✓':''}</div>
+                <div class="lesson-info">
+                  <div class="lesson-title ${done?'done':''}">${l.title}</div>
+                  <div class="lesson-dur">${l.dur}</div>
+                </div>
+                <button class="btn-script" style="color:${isActive?'#fff':ph.color};background:${isActive?ph.color:'transparent'};border-color:${ph.color}"
+                  onclick="openScript(${JSON.stringify(l).replace(/"/g,'&quot;')}, '${mod.title}', '${ph.id}', '${ph.color}')">Script ↗</button>
+              </div>`;
+            }).join('')}</div>`:''}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleExpand(id,btn){
+  expanded[id]=!expanded[id];
+  const card = document.getElementById('modcard_'+id);
+  if(!card) return;
+  card.classList.toggle('open',expanded[id]);
+  btn.textContent = expanded[id]?'Hide ▲':'Show ▼';
+  if(expanded[id]){
+    // rebuild just the lessons panel
+    render();
+  } else {
+    const panel = card.querySelector('.lessons-panel');
+    if(panel) panel.remove();
+    card.classList.remove('open');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SCRIPT GENERATION
+// ═══════════════════════════════════════════════════════
+function openScript(lesson,modTitle,phaseId,color){
+  activeSidebar={lesson,modTitle,phaseId,color};
+  const isMobile = window.innerWidth<=768;
+  if(isMobile){
+    document.getElementById('modalTitle').textContent=lesson.title;
+    document.getElementById('modalSub').textContent=modTitle+' · '+lesson.dur;
+    showLoadingIn('modalBody',color);
+    document.getElementById('mobileModal').style.display='flex';
+  } else {
+    document.getElementById('sidebarTitle').textContent=lesson.title;
+    document.getElementById('sidebarSub').textContent=modTitle+' · '+lesson.dur;
+    showLoadingIn('sidebarBody',color);
+  }
+  render(); // refresh active state
+  callAPI(lesson,modTitle,isMobile,color);
+}
+
+function showLoadingIn(containerId,color){
+  document.getElementById(containerId).innerHTML=`
+    <div class="loading-wrap">
+      <div class="loading-icon">⚙</div>
+      <div class="loading-title">Generating your script...</div>
+      <div class="loading-sub">MIT lecture style · timed segments<br/>stage directions · B-roll notes · CTA</div>
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>`;
+}
+
+async function callAPI(lesson,modTitle,isMobile,color){
+  const targetId = isMobile?'modalBody':'sidebarBody';
+  try {
+    const res = await fetch('/api/generate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt:lesson.prompt,title:lesson.title})
+    });
+    const data = await res.json();
+    const text = data.script||'Script generation failed. Please try again.';
+    document.getElementById(targetId).innerHTML=`
+      <div class="script-content">${escapeHtml(text)}</div>
+      <div class="script-actions">
+        <button class="btn-copy" onclick="copyScript(this)">Copy script</button>
+        <button class="btn-regen" onclick="openScript(${JSON.stringify(lesson).replace(/"/g,'&quot;')},'${modTitle}','','${color}')">Regenerate</button>
+      </div>`;
+  } catch(e){
+    document.getElementById(targetId).innerHTML=`<div style="padding:1rem;color:var(--text2);font-size:13px">Error generating script. Please check your connection and try again.</div>`;
+  }
+}
+
+function copyScript(btn){
+  const content = document.querySelector('.script-content');
+  if(content) navigator.clipboard?.writeText(content.textContent);
+  btn.textContent='Copied ✓';
+  setTimeout(()=>btn.textContent='Copy script',2000);
+}
+
+function closeSidebar(){
+  activeSidebar=null;
+  document.getElementById('sidebarBody').innerHTML=`
+    <div class="sidebar-empty">
+      <div class="sidebar-empty-icon">📝</div>
+      <strong>AI Script Generator</strong><br/><br/>
+      Click the <strong>Script ↗</strong> button on any lesson to instantly generate a full MIT-style production script.<br/><br/>
+      <span style="font-size:11px;color:var(--text3)">Includes: timed segments · stage directions · spoken dialogue · graphics brief · B-roll notes · CTA</span>
+    </div>`;
+  document.getElementById('sidebarTitle').textContent='Select any lesson';
+  document.getElementById('sidebarSub').textContent='Click "Script ↗" on any lesson to generate';
+  render();
+}
+
+function closeMobileModal(e){
+  if(e.target.id==='mobileModal') document.getElementById('mobileModal').style.display='none';
+}
+
+function escapeHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+loadProgress();
+buildTabs();
+render();
+updateProgressUI();
+</script>
+</body>
+</html>
